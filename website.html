@@ -1,0 +1,208 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Women's Day Nadia</title>
+
+<style>
+
+body{
+margin:0;
+overflow:hidden;
+background:linear-gradient(135deg,#ff6a88,#ff99ac,#ffc3a0);
+font-family:Arial, sans-serif;
+color:white;
+text-align:center;
+}
+
+canvas{
+position:absolute;
+top:0;
+left:0;
+}
+
+.container{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+z-index:10;
+}
+
+#name{
+font-size:70px;
+letter-spacing:10px;
+text-shadow:0 0 20px #ff4da6;
+}
+
+#message{
+font-size:26px;
+margin-top:20px;
+min-height:40px;
+}
+
+.heart{
+position:absolute;
+font-size:22px;
+animation:float 6s linear infinite;
+}
+
+@keyframes float{
+from{
+transform:translateY(100vh);
+opacity:1;
+}
+to{
+transform:translateY(-10vh);
+opacity:0;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<canvas id="stars"></canvas>
+
+<div class="container">
+<div id="name">NADIA</div>
+<div id="message"></div>
+</div>
+
+<script>
+
+/* star background */
+
+const canvas=document.getElementById("stars");
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let stars=[];
+
+for(let i=0;i<200;i++){
+stars.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*2
+});
+}
+
+function drawStars(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+ctx.fillStyle="white";
+
+stars.forEach(s=>{
+ctx.beginPath();
+ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+ctx.fill();
+});
+
+requestAnimationFrame(drawStars);
+
+}
+
+drawStars();
+
+/* typing message */
+
+const text="Happy International Women's Day! You are inspiring, brilliant and wonderful ✨";
+let i=0;
+
+function typing(){
+
+if(i<text.length){
+
+document.getElementById("message").innerHTML+=text.charAt(i);
+i++;
+
+setTimeout(typing,50);
+
+}
+
+}
+
+typing();
+
+/* floating hearts */
+
+function createHeart(){
+
+let heart=document.createElement("div");
+
+heart.className="heart";
+
+heart.innerHTML="💖";
+
+heart.style.left=Math.random()*100+"vw";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>heart.remove(),6000);
+
+}
+
+setInterval(createHeart,400);
+
+/* fireworks */
+
+function firework(){
+
+let x=Math.random()*canvas.width;
+let y=Math.random()*canvas.height/2;
+
+for(let i=0;i<30;i++){
+
+let angle=Math.random()*Math.PI*2;
+let speed=Math.random()*4;
+
+let particle={
+x:x,
+y:y,
+vx:Math.cos(angle)*speed,
+vy:Math.sin(angle)*speed,
+life:100
+};
+
+particles.push(particle);
+
+}
+
+}
+
+let particles=[];
+
+function animateFireworks(){
+
+particles.forEach((p,index)=>{
+
+p.x+=p.vx;
+p.y+=p.vy;
+p.life--;
+
+ctx.fillStyle="pink";
+ctx.fillRect(p.x,p.y,3,3);
+
+if(p.life<=0) particles.splice(index,1);
+
+});
+
+requestAnimationFrame(animateFireworks);
+
+}
+
+setInterval(firework,2000);
+
+animateFireworks();
+
+</script>
+
+</body>
+</html>
+```
